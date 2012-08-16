@@ -1,6 +1,7 @@
 var ui = {
     init: function() {
         this.search.init();
+        this.load.me();
     },
     search: {
         init: function () {
@@ -54,7 +55,7 @@ var ui = {
         me: function() {
             $.post('load/me', function(data) {
                 var view = new components.ScheduleView('#user_schedule');
-                view.importData(data);
+                view.importData(data.classes);
             });
         },
         person: function(person) {
@@ -64,13 +65,13 @@ var ui = {
         classData: {
             byInfo: function(info) {
                 classData = this;
-                $.post('load/class/byInfo', info, function(data) {
+                $.post('load/classData/byInfo', info, function(data) {
                     classData.load(data);
                 });
             },
             byId: function(id) {
                 classData = this;
-                $.post('load/class/byId', {id: 'id'}, function(data) {
+                $.post('load/classData/byId', {id: 'id'}, function(data) {
                     classData.load(data);
                 });
             },
@@ -79,7 +80,7 @@ var ui = {
                 var names = [data.name];
                 var periods = [genPeriodStr(data.day, data.period)];
                 var teachers = [data.teacher];
-                var students = data.students;
+                var people = data.people;
                 
                 var relatedPeriods = [];
                 for (var i=0; i<data.related.periods.length; i++) {
@@ -172,7 +173,7 @@ var ui = {
                 $elem.find('.compare_column_name').html(person);
                 $elem.appendTo('page.compare');
                 var view = new components.ScheduleView($elem);
-                view.importData(data);
+                view.importData(data.classes);
             });
         }
     }
@@ -223,6 +224,7 @@ var components = {
             $class.find('.ScheduleView_day').html(day);
             $class.find('.ScheduleView_period').html(data.period);
             $class.find('.ScheduleView_name').html(data.name);
+            $class.find('.ScheduleView_teacher').html(data.teacher);
             $class.appendTo(elem);
         }
         
