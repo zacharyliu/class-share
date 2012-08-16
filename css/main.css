@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFF;
+    font-family: 'Tahoma', sans-serif;
+}
+
+#left {
+    width: 310px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    border-right: 1px solid #777;
+    padding: 20px;
+}
+
+#search {
+    padding: 5px;
+    font-size: 14pt;
+    width: 290px;
+}
+
+#user_schedule {
+    margin-top: 30px;
+}
+
+#right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 350px;
+    padding: 20px;
+}
+
+.class_column {
+    width: 350px;
+    float: left;
+    margin-right: 20px;
+}
+
+#class select {
+    font-size: 25px;
+    display: block;
+    margin-bottom: 40px;
+    padding: 5px 5px;
+}
+
+#class ul {
+    margin: 10px 0 0 0;
+    list-style-type: none;
+    padding: 0;
+}
+
+#class li {
+    font-size: 14pt;
+    margin-bottom: 10px;
+}
+
+.compare_column {
+    width: 350px;
+    float: left;
+}
+
+.ScheduleView_class {
+    height: 50px;
+    background-color: yellow;
+    padding: 5px 10px;
+}
+.ScheduleView_time {
+    font-size: 14px;
+    float: left;
+    margin-top: 7px;
+    text-align: center;
+    width: 35px;
+}
+.ScheduleView_right {
+    float: left;
+    margin-left: 10px;
+}
+.ScheduleView_name {
+    font-size: 22px;
+}
+.ScheduleView_teacher {
+    font-size: 16px;
+}
+
+#primatives {
+    display: none;
+}

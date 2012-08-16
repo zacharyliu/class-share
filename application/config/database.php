@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = '66.175.214.154';
 $db['default']['username'] = 'class-share';
-$db['default']['password'] = 'pc59TmW6dS5nxMfA';
+$db['default']['password'] = 'G9s6udxLYb3F38rc';
 $db['default']['database'] = 'class-share';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
