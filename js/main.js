@@ -71,16 +71,15 @@ var ui = {
             },
             byId: function(id) {
                 classData = this;
-                $.post('load/classData/byId', {id: 'id'}, function(data) {
+                $.post('load/classData/byId', {'id': id}, function(data) {
                     classData.load(data);
                 });
             },
             load: function(data) {
                 ui.pages.display('class');
                 var names = [data.name];
-                var periods = [genPeriodStr(data.day, data.period)];
+                var periods = [this.genPeriodStr(data.day, data.period)];
                 var teachers = [data.teacher];
-                var people = data.people;
                 
                 var relatedPeriods = [];
                 for (var i=0; i<data.related.periods.length; i++) {
@@ -96,6 +95,10 @@ var ui = {
                 this.fillSelect('#class_name', names);
                 this.fillSelect('#class_period', periods);
                 this.fillSelect('#class_teacher', teachers);
+                
+                for (var i=0; i<data.people.length; i++) {
+                    $("#class ul").append('<li>' + data.people[i] + '</li>');
+                }
                 
                 $('#class select').change(function(e) {
                     var info = {};
@@ -124,6 +127,7 @@ var ui = {
             },
             clear: function() {
                 $("#class select").unbind('change').html('');
+                $("#class ul").html('');
             },
             genPeriodStr: function(day, period) {
                 switch(day) {
@@ -150,7 +154,7 @@ var ui = {
             },
             fillSelect: function(elem, items) {
                 for (var i=0; i<items.length; i++) {
-                    $(elem).append('<select>' + items[i] + '</select>');
+                    $(elem).append('<option>' + items[i] + '</option>');
                 }
             }
         }
@@ -225,6 +229,9 @@ var components = {
             $class.find('.ScheduleView_period').html(data.period);
             $class.find('.ScheduleView_name').html(data.name);
             $class.find('.ScheduleView_teacher').html(data.teacher);
+            $class.click(function() {
+                ui.load.classData.byId(data.id);
+            });
             $class.appendTo(elem);
         }
         
