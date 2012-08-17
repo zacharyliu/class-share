@@ -5,14 +5,22 @@ var ui = {
     },
     search: {
         init: function () {
+            var search_class = this;
+            $("#search").blur(function(e) {
+                search_class.clearItems();
+            });
             $("#search").keydown(function(e) {
-                ui.search.search($(this).val());
+                if (e.which == 27) { // escape key
+                    $("#search").blur();
+                } else {
+                    ui.search.search($(this).val());
+                }
+                
             });
         },
         search: function(q) {
             var search_class = this;
             $.post('search', {'q': q}, function(data) {
-                data = $.parseJSON(data);
                 search_class.displayItems(data);
             });
         },
@@ -25,9 +33,9 @@ var ui = {
         },
         appendItem: function(item) {
             var $result = $('#primatives .search_result').clone();
-            $result.html(item.title);
+            $result.html(item.body);
             $result.click(function() {
-                ui.action(item.action);
+                //ui.action(item.action);
             });
             $result.appendTo("#search_results");
         },
