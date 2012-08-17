@@ -3,7 +3,11 @@
 class Main extends CI_Controller {
     
     public function index() {
-        $this->load->view('main');
+        if ($this->session->userdata('auth') == 'true') {
+            $this->load->view('main');
+        } else {
+            $this->load->view('login');
+        }
     }
     
 }

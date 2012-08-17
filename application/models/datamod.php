@@ -79,4 +79,50 @@ class Datamod extends CI_Model {
         return $related;
     }
     
+    public function addPerson($name, $email) {
+        $data = array('name' => $name, 'email' => $email);
+        // Check if the user is already in the database
+        $this->db->where($data);
+        $query = $this->db->get('people');
+        if ($query->num_rows() == 0) {
+            // Not yet in the database, insert them
+            $this->db->insert('people', $data);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function getPersonId($name, $email) {
+        $data = array('name' => $name, 'email' => $email);
+        $this->db->where($data);
+        $query = $this->db->get('people');
+        $row = $query->row();
+        
+        return $row->id;
+    }
+    
+    public function import($name, $email, $data) {
+        // Add the person to the database if they do not already exist
+        $this->addPerson($name, $email);
+        $user_id = $this->getPersonId($name, $email);
+        
+        // Add the classes to the database if they do not exist, then update the enrollment table
+        foreach ($data as $class) {
+            $this->db->where($class);
+            $query = $this->db->get('classes');
+            if ($query->num_rows() == 0) {
+                $this->db->insert('classes', $class);
+                $class_id = $this->db->insert_id();
+            } else {
+                $class_id = $query->row()->id;
+            }
+            $this->db->where(array('user_id' => $user_id, 'class_id' => $class_id));
+            $query = $this->db->get('enrollment');
+            if ($query->num_rows() == 0) {
+                $this->db->insert('enrollment', array('user_id' => $user_id, 'class_id' => $class_id));
+            }
+        }
+    }
+    
 }

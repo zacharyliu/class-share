@@ -3,6 +3,10 @@
 class Load extends CI_Controller {
     public function __construct() {
         parent::__construct();
+        if ($this->session->userdata('auth') != 'true') {
+            header('HTTP/1.1 403 Forbidden');
+            exit();
+        }
         $this->load->model('datamod');
     }
     
@@ -45,7 +49,7 @@ class Load extends CI_Controller {
     }
     
     public function me() {
-        $_POST['id'] = 1;
+        $_POST['id'] = 2;
         $this->person('byId');
     }
 }
