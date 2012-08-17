@@ -39,7 +39,7 @@ class Login extends CI_Controller {
     }
     
     private function login_failure() {
-        throw 'Login failure';
+        throw new Exception('Login failure');
     }
     
     public function logout() {
