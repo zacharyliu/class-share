@@ -4,19 +4,50 @@ var ui = {
         this.load.me();
     },
     search: {
+        active: -1,
         init: function () {
             var search_class = this;
-            $("#search").blur(function(e) {
-                search_class.clearItems();
-            });
             $("#search").keydown(function(e) {
-                if (e.which == 27) { // escape key
-                    $("#search").blur();
-                } else {
-                    ui.search.search($(this).val());
+                console.log(e.which);
+                switch (e.which) {
+                    case 27: //escape key
+                        search_class.blur();
+                        break;
+                    case 38: // up arrow key
+                        if (search_class.active > -1) {
+                            search_class.active--;
+                            search_class.activate();
+                        }
+                        break;
+                    case 40: // down arrow key
+                        if (search_class.active < $('.search_result').length - 1) {
+                            search_class.active++;
+                            search_class.activate();
+                        }
+                        break;
+                    case 13: // enter key
+                        if (search_class.active > -1) {
+                            $('.search_result').eq(search_class.active).click();
+                            search_class.blur();
+                        }
+                    default:
+                        search_class.active = -1;
+                        search_class.activate();
+                        ui.search.search($(this).val());
+                        break;
                 }
-                
             });
+        },
+        blur: function() {
+            $("#search").blur();
+            this.clearItems();
+            this.active = -1;
+        },
+        activate: function() {
+            $('.search_result').removeClass('search_result_active');
+            if (this.active > -1) {
+                $('.search_result').eq(this.active).addClass('search_result_active');
+            }
         },
         search: function(q) {
             var search_class = this;
@@ -30,25 +61,36 @@ var ui = {
                 var item = data[i];
                 this.appendItem(item);
             }
+            if (this.active > data.length - 1) {
+                this.active = data.length - 1;
+                this.activate();
+            }
         },
         appendItem: function(item) {
+            var search_class = this;
             var $result = $('#primatives .search_result').clone();
             $result.html(item.body);
             $result.click(function() {
-                //ui.action(item.action);
+                //search_class.blur();
+                switch (item.type) {
+                    case 'class':
+                        ui.load.classData.byId(item.id);
+                        break;
+                    case 'person':
+                        ui.load.person.byId(item.id);
+                        break;
+                }
             });
             $result.appendTo("#search_results");
         },
         clearItems: function() {
             $("#search_results").html('');
-        }
+        },
+        
     },
     action: function(action) {
         action = action.split('/');
         switch(action[0]) {
-            case 'person':
-                ui.load.person(action[1]);
-                break;
             case 'class':
                 ui.load.classById(action[1]);
                 break;
@@ -66,9 +108,11 @@ var ui = {
                 view.importData(data.classes);
             });
         },
-        person: function(person) {
-            ui.pages.display('compare');
-            ui.compare.append(person);
+        person: {
+            byId: function(id) {
+                ui.pages.display('compare');
+                ui.compare.append(id);
+            }
         },
         classData: {
             byInfo: function(info) {
@@ -84,6 +128,7 @@ var ui = {
                 });
             },
             load: function(data) {
+                console.log(data);
                 ui.pages.display('class');
                 var names = [data.name];
                 var periods = [this.genPeriodStr(data.day, data.period)];
@@ -95,7 +140,13 @@ var ui = {
                     relatedPeriods.push(this.genPeriodStr(item.day, item.period));
                 }
                 
-                names = names.concat(data.related.names);
+                var relatedNames = [];
+                for (var i=0; i<data.related.names.length; i++) {
+                    var item = data.related.names[i];
+                    relatedNames.push(this.name);
+                }
+                
+                names = names.concat(relatedNames);
                 periods = periods.concat(relatedPeriods);
                 teachers = teachers.concat(data.related.teachers);
                 
@@ -157,7 +208,7 @@ var ui = {
                     default:
                         throw 'Day index out of bounds';
                 }
-                var string = day + ', P' + period;
+                var string = day + ', ' + utils.getPeriodString(period);
                 return string;
             },
             fillSelect: function(elem, items) {
@@ -179,8 +230,8 @@ var ui = {
         }
     },
     compare: {
-        append: function(person) {
-            $.post('load/person', {'name': person}, function(data) {
+        append: function(id) {
+            $.post('load/person', {'id': id}, function(data) {
                 $elem = $('#primatives > .compare_column').clone();
                 $elem.find('.compare_column_name').html(person);
                 $elem.appendTo('page.compare');
@@ -234,7 +285,7 @@ var components = {
                     throw 'Day index out of bounds in ScheduleView constructor';
             }
             $class.find('.ScheduleView_day').html(day);
-            $class.find('.ScheduleView_period').html(data.period);
+            $class.find('.ScheduleView_period').html(utils.getPeriodString(data.period));
             $class.find('.ScheduleView_name').html(data.name);
             $class.find('.ScheduleView_teacher').html(data.teacher);
             $class.click(function() {
@@ -244,6 +295,25 @@ var components = {
         }
         
         create();
+    }
+}
+
+var utils = {
+    getPeriodString: function(period) {
+        switch (period) {
+            case '0':
+                return 'AM';
+                break;
+            case '3.5':
+                return 'Lunch';
+                break;
+            case '6':
+                return 'PM';
+                break;
+            default:
+                return 'P' + period;
+                break;
+        }
     }
 }
 

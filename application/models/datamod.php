@@ -31,6 +31,8 @@ class Datamod extends CI_Model {
         $this->db->from('enrollment');
         $this->db->join('classes', 'classes.id = enrollment.class_id');
         $this->db->select(array('classes.id', 'name', 'day', 'period', 'teacher'));
+        $this->db->order_by('day', 'asc');
+        $this->db->order_by('period', 'asc');
         $query = $this->db->get();
         return $query->result();
     }

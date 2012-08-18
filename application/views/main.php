@@ -9,7 +9,7 @@
     <body>
         <div id="wrapper">
             <div id="left">
-                <input type="text" id="search" placeholder="Find classes / people..."></input>
+                <input type="text" id="search" placeholder="Find classes / people..." autocomplete="off"></input>
                 <div id="search_results">
                 </div>
                 <div id="user_schedule">

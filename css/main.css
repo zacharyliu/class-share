@@ -22,6 +22,15 @@ body {
     width: 290px;
 }
 
+.search_result {
+    padding: 7px 5px;
+    border-bottom: 1px solid #555;
+}
+
+.search_result_active {
+    background-color: yellow;
+}
+
 #user_schedule {
     margin-top: 30px;
 }
@@ -67,8 +76,9 @@ body {
 
 .ScheduleView_class {
     height: 50px;
-    background-color: yellow;
+    border-top: 1px solid #555;
     padding: 5px 10px;
+    cursor: pointer;
 }
 .ScheduleView_time {
     font-size: 14px;
