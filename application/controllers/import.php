@@ -52,7 +52,7 @@ class Import extends CI_Controller {
                         }
                     
                         $data = array();
-                        for ($i=0; $i<$num; $i++) {
+                        for ($i=0; $i<$n; $i++) {
                             $item_class = $clss[$i];
                             $item_teacher = $teacher[$i];
                             $item_period = $pd[$i];
@@ -108,9 +108,9 @@ class Import extends CI_Controller {
                     else throw "Verify integrity of powerschool html file."
                 }
             }
-        } else {
+        }
+        else {
             throw "Invalid file.";
         }
     }
-    
 }
