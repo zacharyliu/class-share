@@ -41,7 +41,7 @@ class Import extends CI_Controller {
                     //perform a basic check to make sure this is a powerschool html
                     if ((strpos($fileData,'-- start logo, school, term,') != FALSE)
                       && (strpos($fileData,'Weighted Percent GPA (Y1)') != FALSE)
-                      && (strpos($fileData,'Render list of associated students') != FALSE) {
+                      && (strpos($fileData,'Render list of associated students') != FALSE)) {
                         $fileData = substr($fileData,strpos($fileData,'<tr class="center" bgcolor="#edf3fe">'));
                         $n = 0; //array number
                         while (strpos($fileData,">P",0) != FALSE) {
@@ -105,7 +105,7 @@ class Import extends CI_Controller {
                     
                         redirect('/');
                     }
-                    else throw "Verify integrity of powerschool html file."
+                    else throw "Verify integrity of powerschool html file.";
                 }
             }
         }
