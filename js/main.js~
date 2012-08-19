@@ -272,23 +272,18 @@ var ui = {
         remove: function(id) {
             var index = ui.compare.current.indexOf(id);
             if (index != -1) {
-                $('#compare .compare_column').eq(index).empty().remove();
+                $('#compare .compare_column').eq(index).remove();
                 ui.compare.current.splice(index, 1);
             }
         },
         colors: [
-            '#B7E4FF',
-            '#70CAFF',
-            '#71B1D7',
-            '#3C93C7',
-            '#7698D7',
-            '#76A6FF',
-            '#BAD3FF',
-            '#3F6FC7',
-            '#6BD7CB',
-            '#67FFEF',
-            '#B3FFF7',
-            '#37C7B8'
+            'red',
+            'orange',
+            'yellow',
+            'green',
+            'blue',
+            'purple',
+            'grey'
         ],
         colorize: function() {
             var $elems = $('#wrapper .ScheduleView_class');
@@ -308,8 +303,6 @@ var ui = {
                             setColors[data_a.id] = color;
                             if (lastColor < colors.length - 1) {
                                 lastColor++;
-                            } else {
-                                lastColor = 0;
                             }
                         }
                         $elems.eq(a).css({'background-color': color});

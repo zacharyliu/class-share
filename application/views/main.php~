@@ -18,9 +18,7 @@
             <div id="right">
                 <div id="topbar_right">
                     <page id="compare">
-                        <div class="compare_column" id="compare_column_info">
-                            Search for a person to add them to the schedule comparison list...
-                        </div>
+                        
                     </page>
                     <page id="class">
                         <div class="class_column">

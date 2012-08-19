@@ -125,7 +125,7 @@ page {
     text-align: center;
 }
 
-#compare_column_info {
+.compare_column_info {
     text-align: center;
     font-style: italic;
 }

@@ -41,7 +41,7 @@ class Datamod extends CI_Model {
         $this->db->where('class_id', $id);
         $this->db->from('enrollment');
         $this->db->join('people', 'people.id = enrollment.user_id', 'inner');
-        $this->db->select(array('people.id', 'people.name', 'people.email'));
+        $this->db->select(array('people.id', 'people.name', 'people.email');
         $query = $this->db->get();
         
         $result = $query->result();
