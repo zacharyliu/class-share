@@ -17,24 +17,22 @@
             </div>
             <div id="right">
                 <div id="topbar_right">
-                    <page id="compare"></page>
+                    <page id="compare">
+                        <div class="compare_column" id="compare_column_info">
+                            Search for a person to add them to the schedule comparison list...
+                        </div>
+                    </page>
                     <page id="class">
                         <div class="class_column">
                             <select id="class_name">
-                                <option>Class Name</option>
                             </select>
                             <select id="class_period">
-                                <option>Mon P2</option>
-                                <option>Tues P3</option>
                             </select>
                             <select id="class_teacher">
-                                <option>Mr. Person</option>
                             </select>
                         </div>
                         <div class="class_column">
                             <ul>
-                                <li>Student 1</li>
-                                <li>Student 2</li>
                             </ul>
                         </div>
                     </page>

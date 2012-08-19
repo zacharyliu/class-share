@@ -39,6 +39,9 @@ class Load extends CI_Controller {
             case 'byId':
                 $data = $this->datamod->personById($_POST['id']);
                 break;
+            case 'me':
+                $data = $this->datamod->personById($this->session->userdata('id'));
+                break;
             default:
                 throw "No method specified for person()";
         }
@@ -46,10 +49,5 @@ class Load extends CI_Controller {
         $data->classes = $this->datamod->personEnrollment($data->id);
         
         $this->load->view('json', array('data' => $data));
-    }
-    
-    public function me() {
-        $_POST['id'] = 2;
-        $this->person('byId');
     }
 }

@@ -25,6 +25,7 @@ body {
 .search_result {
     padding: 7px 5px;
     border-bottom: 1px solid #555;
+    cursor: pointer;
 }
 
 .search_result_active {
@@ -69,11 +70,6 @@ body {
     margin-bottom: 10px;
 }
 
-.compare_column {
-    width: 350px;
-    float: left;
-}
-
 .ScheduleView_class {
     height: 50px;
     border-top: 1px solid #555;
@@ -100,4 +96,29 @@ body {
 
 #primatives {
     display: none;
+}
+
+page {
+    display: block;
+}
+
+#class {
+    display: none;
+}
+
+#compare {
+    white-space: nowrap;
+}
+
+.compare_column {
+    width: 350px;
+    display: inline-block;
+    margin-right: 30px;
+    white-space: normal;
+}
+
+.compare_column_name {
+    font-size: 15pt;
+    margin-bottom: 20px;
+    text-align: center;
 }

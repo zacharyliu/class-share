@@ -41,40 +41,29 @@ class Datamod extends CI_Model {
         $this->db->where('class_id', $id);
         $this->db->from('enrollment');
         $this->db->join('people', 'people.id = enrollment.user_id', 'inner');
+        $this->db->select(array('people.id', 'people.name', 'people.email'));
         $query = $this->db->get();
         
         $result = $query->result();
         
-        $people = array();
-        foreach ($result as $item) {
-            array_push($people, $item->name);
-        }
-        
-        return $people;
+        return $result;
     }
     
     public function relatedClasses($info) {
         $this->db->from('classes');
         $this->db->where(array('id !=' => $info->id, 'day' => $info->day, 'period' => $info->period, 'teacher' => $info->teacher));
-        $this->db->or_where(array('id !=' => $info->id, 'name' => $info->name, 'teacher' => $info->teacher));
-        $this->db->or_where(array('id !=' => $info->id, 'name' => $info->name, 'day' => $info->day, 'period' => $info->period));
         $query = $this->db->get();
+        $related_names = $query->result();
         
-        $result = $query->result();
+        $this->db->from('classes');
+        $this->db->where(array('id !=' => $info->id, 'name' => $info->name, 'teacher' => $info->teacher));
+        $query = $this->db->get();
+        $related_periods = $query->result();
         
-        $related_names = array();
-        $related_periods = array();
-        $related_teachers = array();
-        
-        foreach ($result as $item) {
-            if ($item->name != $info->name) {
-                array_push($related_names, array('name' => $item->name, 'id' => $item->id));
-            } else if ($item->day != $info->day || $item->period != $info->period) {
-                array_push($related_periods, array('day' => $item->day, 'period' => $item->period, 'id' => $item->id));
-            } else if ($item->teacher != $info->teacher) {
-                array_push($related_teachers, array('teacher' => $item->teacher, 'id' => $item->id));
-            }
-        }
+        $this->db->from('classes');
+        $this->db->where(array('id !=' => $info->id, 'name' => $info->name, 'day' => $info->day, 'period' => $info->period));
+        $query = $this->db->get();
+        $related_teachers = $query->result();
         
         $related = array('names' => $related_names, 'periods' => $related_periods, 'teachers' => $related_teachers);
         
@@ -99,16 +88,15 @@ class Datamod extends CI_Model {
         $data = array('name' => $name, 'email' => $email);
         $this->db->where($data);
         $query = $this->db->get('people');
-        $row = $query->row();
-        
-        return $row->id;
+        if ($query->num_rows() == 0) {
+            return false;
+        } else {
+            $row = $query->row();
+            return $row->id;
+        }
     }
     
-    public function import($name, $email, $data) {
-        // Add the person to the database if they do not already exist
-        $this->addPerson($name, $email);
-        $user_id = $this->getPersonId($name, $email);
-        
+    public function import($user_id, $data) {        
         // Add the classes to the database if they do not exist, then update the enrollment table
         foreach ($data as $class) {
             $this->db->where($class);

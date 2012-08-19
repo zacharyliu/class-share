@@ -101,7 +101,7 @@ class Import extends CI_Controller {
                         }
                         // Import into database now
                         $this->load->model('datamod');
-                        $this->datamod->import($this->session->userdata('name'), $this->session->userdata('email'), $data);
+                        $this->datamod->import($this->session->userdata('id'), $data);
                     
                         redirect('/');
                     }

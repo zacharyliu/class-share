@@ -48,7 +48,8 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '66.175.214.154';
+//$db['default']['hostname'] = '66.175.214.154';
+$db['default']['hostname'] = '127.0.0.1';
 $db['default']['username'] = 'class-share';
 $db['default']['password'] = 'G9s6udxLYb3F38rc';
 $db['default']['database'] = 'class-share';
