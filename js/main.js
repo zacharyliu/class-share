@@ -1,4 +1,5 @@
 var ui = {
+    animationDuration: 150,
     init: function() {
         this.search.init();
         this.load.me();
@@ -182,20 +183,25 @@ var ui = {
                     periods_str.push(this.genPeriodStr(item.day, item.period));
                 }
                 
-                this.clear();
+                this.clearSelect();
                 this.fillSelect('#class_name', names, name);
                 this.fillSelect('#class_period', periods_str, period_str);
                 this.fillSelect('#class_teacher', teachers, teacher);
                 
-                for (var i=0; i<data.people.length; i++) {
-                    var name = data.people[i].name;
-                    var id = data.people[i].id;
-                    $html = $('<li>' + name + '</li>');
-                    $html.click(function() {
-                        ui.load.person.byId(id);
-                    });
-                    $html.appendTo("#class ul");
-                }
+                // Animate out the list of people, then animate in the new list
+                $("#class ul").stop(true, true).hide('drop', {'direction': 'down'}, ui.animationDuration, function() {
+                    ui.load.classData.clearPeople();
+                    for (var i=0; i<data.people.length; i++) {
+                        var name = data.people[i].name;
+                        var id = data.people[i].id;
+                        $html = $('<li>' + name + '</li>');
+                        $html.click(function() {
+                            ui.load.person.byId(id);
+                        });
+                        $html.appendTo("#class ul");
+                    }
+                }).show('drop', {'direction': 'up'}, ui.animationDuration);
+                    
                 
                 $('#class select').change(function(e) {
                     var info = {};
@@ -222,8 +228,10 @@ var ui = {
                     ui.load.classData.byInfo(info);
                 });
             },
-            clear: function() {
+            clearSelect: function() {
                 $("#class select").unbind('change').html('');
+            },
+            clearPeople: function() {
                 $("#class ul").html('');
             },
             genPeriodStr: function(day, period) {
@@ -248,8 +256,8 @@ var ui = {
         display: function(page) {
             if (page != this.current && $.inArray(page, this.all) != -1) {
                 this.current = page;
-                $('page').hide();
-                $('page#' + page).show();
+                $('page').not('#' + page).hide('drop', {'direction': 'down'}, ui.animationDuration);
+                $('page#' + page).show('drop', {'direction': 'up'}, ui.animationDuration);
                 if (page != 'compare') {
                     ui.compare.unColorize();
                 }
@@ -316,14 +324,14 @@ var ui = {
                                 lastColor = 0;
                             }
                         }
-                        $elems.eq(a).css({'background-color': color});
-                        $elems.eq(b).css({'background-color': color});
+                        $elems.eq(a).animate({'background-color': color}, ui.animationDuration);
+                        $elems.eq(b).animate({'background-color': color}, ui.animationDuration);
                     }
                 }
             }
         },
         unColorize: function() {
-            $('#wrapper .ScheduleView_class').css({'background': 'none'});
+            $('#wrapper .ScheduleView_class').animate({'background-color': '#FFFFFF'}, ui.animationDuration);
         }
     }
 }

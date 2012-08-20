@@ -60,10 +60,15 @@ body {
     width: 330px;
 }
 
+#class .class_column:first-child {
+    background-color: #FFFFFF;
+}
+
 #class ul {
     margin: 10px 0 0 0;
     list-style-type: none;
     padding: 0;
+    z-index: -1;
 }
 
 #class li {
@@ -102,6 +107,7 @@ body {
 
 page {
     display: block;
+    position: absolute;
 }
 
 #class {
@@ -131,5 +137,5 @@ page {
 }
 
 #logout {
-    text-align: center;
+    text-align: center; 
 }

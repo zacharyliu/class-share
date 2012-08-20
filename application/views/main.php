@@ -4,6 +4,7 @@
         <title>Class Schedules</title>
         <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/main.css"></link>
         <script type="text/javascript" src="<?=base_url()?>js/jquery-1.8.0.min.js"></script>
+        <script type="text/javascript" src="<?=base_url()?>js/jquery-ui-1.8.23.custom.min.js"></script>
         <script type="text/javascript" src="<?=base_url()?>js/main.js"></script>
     </head>
     <body>
