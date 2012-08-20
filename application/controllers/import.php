@@ -13,15 +13,16 @@ class Import extends CI_Controller {
         $this->load->view('import');
     }
     
+    public $fileData = '';
+    
     //In $fileData, copy from $startPos to an ending char, removing everything up to the ending char (inclusive).
     private function copyToCharMain($startPos,$char) {
-        global $fileData;
         $output = "";
-        while ($fileData[$startPos] != $char){
-            $output = $output . $fileData[$startPos];
+        while ($this->fileData[$startPos] != $char){
+            $output = $output . $this->fileData[$startPos];
             $startPos +=1;
         }
-        $fileData = substr($fileData,$startPos);
+        $this->fileData = substr($this->fileData,$startPos);
         return $output;
     }
     
@@ -34,20 +35,20 @@ class Import extends CI_Controller {
           &&($_FILES["file"]["size"] < 60000) //size <60kb
           && in_array($extension, $allowedExts)) {//make sure extension matches
             if ($_FILES["file"]["error"] > 0) {
-                throw "Error: " . $_FILES["file"]["error"] . "<br />";
+                throw new ErrorException("Error: " . $_FILES["file"]["error"] . "<br />");
             } else {
                 if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-                    $fileData = file_get_contents($_FILES['file']['tmp_name']);
+                    $this->fileData = file_get_contents($_FILES['file']['tmp_name']);
                     //perform a basic check to make sure this is a powerschool html
-                    if ((strpos($fileData,'-- start logo, school, term,') != FALSE)
-                      && (strpos($fileData,'Weighted Percent GPA (Y1)') != FALSE)
-                      && (strpos($fileData,'Render list of associated students') != FALSE)) {
-                        $fileData = substr($fileData,strpos($fileData,'<tr class="center" bgcolor="#edf3fe">'));
+                    if ((strpos($this->fileData,'-- start logo, school, term,') != FALSE)
+                      && (strpos($this->fileData,'Weighted Percent GPA (Y1)') != FALSE)
+                      && (strpos($this->fileData,'Render list of associated students') != FALSE)) {
+                        $this->fileData = substr($this->fileData,strpos($this->fileData,'<tr class="center" bgcolor="#edf3fe">'));
                         $n = 0; //array number
-                        while (strpos($fileData,">P",0) != FALSE) {
-                            $pd[$n] = $this->copyToCharMain(strpos($fileData,">P",0)+1,"<");
-                            $clss[$n] = $this->copyToCharMain(strpos($fileData,'n="left">',0)+9,"<");
-                            $teacher[$n] = $this->copyToCharMain(strpos($fileData,'org">',0)+5,"<");
+                        while (strpos($this->fileData,">P",0) != FALSE) {
+                            $pd[$n] = $this->copyToCharMain(strpos($this->fileData,">P",0)+1,"<");
+                            $clss[$n] = $this->copyToCharMain(strpos($this->fileData,'n="left">',0)+9,"<");
+                            $teacher[$n] = $this->copyToCharMain(strpos($this->fileData,'org">',0)+5,"<");
                             $n+=1;
                         }
                     
@@ -102,15 +103,15 @@ class Import extends CI_Controller {
                         // Import into database now
                         $this->load->model('datamod');
                         $this->datamod->import($this->session->userdata('id'), $data);
-                    
+                        
                         redirect('/');
                     }
-                    else throw "Verify integrity of powerschool html file.";
+                    else throw new ErrorException("Verify integrity of powerschool html file.");
                 }
             }
         }
         else {
-            throw "Invalid file.";
+            throw new ErrorException("Invalid file.");
         }
     }
 }

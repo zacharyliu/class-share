@@ -109,8 +109,12 @@ var ui = {
     load: {
         me: function() {
             $.post('load/person/me', function(data) {
-                var view = new components.ScheduleView('#user_schedule');
-                view.importData(data.classes);
+                if (data.classes.length == 0) {
+                    $('#user_schedule').html('<a href="import/">Import your class schedule...</a>');
+                } else {
+                    var view = new components.ScheduleView('#user_schedule');
+                    view.importData(data.classes);
+                }
             });
         },
         person: {
