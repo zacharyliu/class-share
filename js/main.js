@@ -304,13 +304,14 @@ var ui = {
         ],
         colorize: function() {
             var $elems = $('#wrapper .ScheduleView_class');
+            var $user_elems = $('#user_schedule .ScheduleView_class');
             var lastColor = 0;
             var colors = this.colors;
             var setColors = {};
             $elems.css({'background': 'none'});
-            for (var a=0; a<$elems.length; a++) {
+            for (var a=0; a<$user_elems.length; a++) {
                 var data_a = $elems.eq(a).data('data');
-                for (var b=a+1; b<$elems.length; b++) {
+                for (var b=$user_elems.length; b<$elems.length; b++) {
                     var data_b = $elems.eq(b).data('data');
                     if (data_a.id == data_b.id) {
                         if (data_a.id in setColors) {
