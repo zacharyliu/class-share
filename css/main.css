@@ -17,9 +17,10 @@ body {
 }
 
 #search {
-    padding: 5px;
+    padding: 5px 10px;
     font-size: 14pt;
-    width: 290px;
+    width: 270px;
+    height: 20px;
 }
 
 .search_result {
@@ -79,16 +80,19 @@ body {
 
 .ScheduleView_class {
     height: 50px;
-    border-top: 1px solid #555;
+    border: 1px solid #BBB;
+    margin-top: -1px;
     padding: 5px 10px;
     cursor: pointer;
 }
 .ScheduleView_time {
     font-size: 14px;
     float: left;
-    margin-top: 7px;
+    margin-top: 3px;
     text-align: center;
-    width: 35px;
+    width: 37px;
+    border-right: 1px solid #DDD;
+    padding: 5px 7px 5px 0;
 }
 .ScheduleView_right {
     float: left;
@@ -113,7 +117,7 @@ page {
 #class {
     display: none;
 }
-
+    
 #compare {
     white-space: nowrap;
 }
