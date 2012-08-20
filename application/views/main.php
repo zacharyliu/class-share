@@ -14,6 +14,9 @@
                 </div>
                 <div id="user_schedule">
                 </div>
+                <div id="logout">
+                    <a href="<?=site_url('login/logout')?>">Logout</a>
+                </div>
             </div>
             <div id="right">
                 <div id="topbar_right">

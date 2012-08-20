@@ -129,3 +129,7 @@ page {
     text-align: center;
     font-style: italic;
 }
+
+#logout {
+    text-align: center;
+}
