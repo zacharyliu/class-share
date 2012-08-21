@@ -118,7 +118,7 @@ class Datamod extends CI_Model {
     public function search($q) {
         $q = $this->db->escape_like_str($q);
         $user_id = $this->db->escape($this->session->userdata('id'));
-        $query = $this->db->query('SELECT * FROM (SELECT id, CONCAT(name, ", ", teacher) AS body, "class" AS type FROM classes UNION ALL SELECT id, name AS body, "person" AS type FROM people WHERE id != ' . $user_id . ') AS search WHERE body LIKE "%' . $q . '%" GROUP BY body');
+        $query = $this->db->query("SELECT * FROM (SELECT id, CONCAT(name, ', ', teacher) AS body, 'class' AS type FROM classes UNION ALL SELECT id, name AS body, 'person' AS type FROM people WHERE id != $user_id) AS search WHERE body LIKE '%$q%' GROUP BY body");
         $result = $query->result();
         $result_chunk = array_chunk($result, 5);
         if (count($result_chunk) > 0) {
