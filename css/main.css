@@ -53,8 +53,14 @@ body {
     margin-right: 20px;
 }
 
+#class .class_column:first-child span {
+    display: block;
+    font-size: 14pt;
+    margin: 0 0 10px 0;
+}
+
 #class select {
-    font-size: 25px;
+    font-size: 14pt;
     display: block;
     margin-bottom: 40px;
     padding: 5px 5px;
@@ -81,7 +87,7 @@ body {
 .ScheduleView_class {
     height: 50px;
     border: 1px solid #BBB;
-    margin-top: -1px;
+    margin-bottom: -1px;
     padding: 5px 10px;
     cursor: pointer;
 }

@@ -195,8 +195,9 @@ var ui = {
                         var name = data.people[i].name;
                         var id = data.people[i].id;
                         $html = $('<li>' + name + '</li>');
+                        $html.data('id', id)
                         $html.click(function() {
-                            ui.load.person.byId(id);
+                            ui.load.person.byId($(this).data('id'));
                         });
                         $html.appendTo("#class ul");
                     }

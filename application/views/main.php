@@ -28,10 +28,13 @@
                     </page>
                     <page id="class">
                         <div class="class_column">
+                            <span>Class Name:</span>
                             <select id="class_name">
                             </select>
+                            <span>Day / Period:</span>
                             <select id="class_period">
                             </select>
+                            <span>Teacher:</span>
                             <select id="class_teacher">
                             </select>
                         </div>
