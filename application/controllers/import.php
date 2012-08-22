@@ -32,7 +32,7 @@ class Import extends CI_Controller {
         
        if (($_FILES["file"]["type"] == "text/html") //only allow html
           &&($_FILES["file"]["size"] > 35000)  //size >35kb
-          &&($_FILES["file"]["size"] < 60000) //size <60kb
+          &&($_FILES["file"]["size"] < 65000) //size <65kb
           && in_array($extension, $allowedExts)) {//make sure extension matches
             if ($_FILES["file"]["error"] > 0) {
                 throw new ErrorException("Error: " . $_FILES["file"]["error"] . "<br />");
@@ -48,7 +48,7 @@ class Import extends CI_Controller {
                         while (strpos($this->fileData,">P",0) != FALSE) {
                             $pd[$n] = $this->copyToCharMain(strpos($this->fileData,">P",0)+1,"<");
                             $clss[$n] = $this->copyToCharMain(strpos($this->fileData,'n="left">',0)+9,"<");
-                            $teacher[$n] = $this->copyToCharMain(strpos($this->fileData,'org">',0)+5,"<");
+                            $teacher[$n] = $this->copyToCharMain(strpos($this->fileData,'Details about ',0)+14,"""); //$this->copyToCharMain(strpos($this->fileData,'org">',0)+5,"<");
                             $n+=1;
                         }
                     
