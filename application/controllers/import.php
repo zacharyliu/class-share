@@ -48,7 +48,7 @@ class Import extends CI_Controller {
                         while (strpos($this->fileData,">P",0) != FALSE) {
                             $pd[$n] = $this->copyToCharMain(strpos($this->fileData,">P",0)+1,"<");
                             $clss[$n] = $this->copyToCharMain(strpos($this->fileData,'n="left">',0)+9,"<");
-                            $teacher[$n] = $this->copyToCharMain(strpos($this->fileData,'Details about ',0)+14,"""); //$this->copyToCharMain(strpos($this->fileData,'org">',0)+5,"<");
+                            $teacher[$n] = $this->copyToCharMain(strpos($this->fileData,'title="Details about ',0)+21,'"'); //$this->copyToCharMain(strpos($this->fileData,'org">',0)+5,"<");
                             $n+=1;
                         }
                     
