@@ -1,6 +1,6 @@
-class-share
+#HTHS Class Share
+##Written by Zachary Liu and Matt Hsu
 ===========
 
-#Written by Zachary Liu and Matt Hsu (NOT EESTON OOG)
-
 Allows users to securely share and compare class schedules with other HTHS students.
+Created in the summer of 2012.
