@@ -43,7 +43,7 @@ class Import extends CI_Controller {
                     if ((strpos($this->fileData,'-- start logo, school, term,') != FALSE)
                       && (strpos($this->fileData,'Weighted Percent GPA (Y1)') != FALSE)
                       && (strpos($this->fileData,'Render list of associated students') != FALSE)) {
-                        $this->fileData = substr($this->fileData,strpos($this->fileData,'<tr class="center" bgcolor="#edf3fe">'));
+                        $this->fileData = substr($this->fileData,strpos($this->fileData,'<tr class="center" bgcolor="#edf3fe"'));
                         $n = 0; //array number
                         while (strpos($this->fileData,">P",0) != FALSE) {
                             $pd[$n] = $this->copyToCharMain(strpos($this->fileData,">P",0)+1,"<");
